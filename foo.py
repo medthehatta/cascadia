@@ -3,7 +3,7 @@
 
 
 import random
-import networkx
+from networkx import Graph
 from dataclasses import dataclass
 from enum import Enum
 from enum import auto
@@ -94,17 +94,23 @@ class Arrangement:
     def __init__(self):
         self.num = 0
         self.ids = {}
+        self.tiles = {}
+        self.graph = {}
 
     def _id(self, t):
         if t not in self.ids:
             self.ids[t] = self.num
+            self.tiles[self.num] = t
             self.num += 1
         return self.ids[t]
 
-    def connect(t1, t2, edge_pairing):
-        t1id = self._id(t1)
-        t2id = self._id(t2)
-        return (t1id, t2id)
+    def _tile(self, id_):
+        return self.tiles[id_]
+
+    def connect(tile_in_id, tile_out, edge_pairing):
+        t1id = tile_in_id
+        t2id = self._id(tile_out)
+        return t2id
 
     def set_token(t, animal):
         pass
@@ -130,46 +136,46 @@ class Arrangement:
 
 
 
-game = {
-    "players": [
-        {
-            "graph": graph1,
-            "groups": {
-                "fox": [],
-                "hawk": [],
-                "bear": [],
-                "salmon": [],
-                "elk": [],
-            },
-            "corridors": {
-                "tree": [],
-                "desert": [],
-                "mountain": [],
-                "plain": [],
-                "river": [],
-            },
-            "tokens": 0,
-        },
-        {
-            "graph": graph2,
-            "groups": {
-                "fox": [],
-                "hawk": [],
-                "bear": [],
-                "salmon": [],
-                "elk": [],
-            },
-            "corridors": {
-                "tree": [],
-                "desert": [],
-                "mountain": [],
-                "plain": [],
-                "river": [],
-            },
-            "tokens": 0,
-        },
-    ],
-}
+# game = {
+#     "players": [
+#         {
+#             "graph": graph1,
+#             "groups": {
+#                 "fox": [],
+#                 "hawk": [],
+#                 "bear": [],
+#                 "salmon": [],
+#                 "elk": [],
+#             },
+#             "corridors": {
+#                 "tree": [],
+#                 "desert": [],
+#                 "mountain": [],
+#                 "plain": [],
+#                 "river": [],
+#             },
+#             "tokens": 0,
+#         },
+#         {
+#             "graph": graph2,
+#             "groups": {
+#                 "fox": [],
+#                 "hawk": [],
+#                 "bear": [],
+#                 "salmon": [],
+#                 "elk": [],
+#             },
+#             "corridors": {
+#                 "tree": [],
+#                 "desert": [],
+#                 "mountain": [],
+#                 "plain": [],
+#                 "river": [],
+#             },
+#             "tokens": 0,
+#         },
+#     ],
+# }
 
 
 
